@@ -20,3 +20,20 @@ model User {
   name  String?
 }
 
+model Tasks {
+  id Int @id @default(autoincrement())
+  title String
+  status String
+  priority String
+  description String?
+  dueDate DateTime?
+  board Boards @relation(fields: [boardId], references: [id])
+  boardId Int
+}
+
+model Boards {
+  id Int @id @default(autoincrement())
+  title String
+  tasks Tasks[]
+}
+
