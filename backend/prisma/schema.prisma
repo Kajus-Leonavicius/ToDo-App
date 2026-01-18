@@ -23,8 +23,8 @@ model User {
 model Tasks {
   id Int @id @default(autoincrement())
   title String
-  status String
-  priority String
+  status String @default("Waiting")
+  priority String @default("Low")
   description String?
   dueDate DateTime?
   board Boards @relation(fields: [boardId], references: [id])

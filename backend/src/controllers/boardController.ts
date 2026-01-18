@@ -10,3 +10,19 @@ export const getBoards = async (req: Request, res: Response) =>{
         console.error(e)
     }
 }
+
+export const postBoards = async (req: Request, res:Response) =>{
+    try{
+        const {title} = req.body
+
+        const newBoard = await prisma.boards.create({
+            data:{
+                title: title
+            }
+        })
+
+        return res.status(200).json({'message': 'OK'})
+    }catch(e){
+        console.error(e)
+    }
+}

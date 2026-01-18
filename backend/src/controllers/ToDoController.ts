@@ -13,9 +13,8 @@ export const getTasks = async(req: Request, res: Response) =>{
                 ...(priority &&{priority})
             }
         })
-        console.log(tasks.length)
         if(tasks.length === 0){
-            res.status(404).json({'message': 'no task found'})
+            return res.status(200).json({'message': 'no task found'})
         }
         return res.status(200).json(tasks)
     }catch(e){
@@ -26,16 +25,17 @@ export const getTasks = async(req: Request, res: Response) =>{
 
 export const createTask = async (req: Request, res: Response) =>{
     try{
-        const {title, status, priority, description, dueDate, boardId} = req.body
+        const {title, description, dueDate} = req.body
+        const {boardId} = req.params
 
         const task = await prisma.tasks.create({
             data: {
                 title: title,
-                status: status,
-                priority: priority,
+                //status: status,
+                //priority: priority,
                 description: description,
-                dueDate: new Date(dueDate).toISOString(),
-                boardId: boardId
+                dueDate: dueDate,
+                boardId: Number(boardId)
             }
         })
 
@@ -74,11 +74,12 @@ export const updateTask = async (req: Request, res: Response) =>{
                 id: Number(id)
             },
             data :{
-                title: title,
-                status: status,
-                priority: priority,
-                description: description,
-                dueDate: new Date(dueDate).toISOString()
+                ...(title &&{title}),
+                ...(status &&{status}),
+                ...(priority &&{priority}),
+                ...(description &&{description}),
+                ...(dueDate &&{dueDate}),
+                
             }
         })
 

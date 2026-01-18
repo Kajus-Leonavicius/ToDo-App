@@ -3,7 +3,7 @@ import { getTasks, createTask, deleteTask, updateTask } from '../controllers/ToD
 
 const router = express.Router()
 router.get('/todo/:boardId', getTasks)
-router.post('/todo', createTask )
+router.post('/todo/:boardId', createTask )
 router.delete('/todo/:id', deleteTask)
 router.patch('/todo/:id', updateTask)
 
