@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/kajusleonavicius/Desktop/ToDo-App/client/components/SideBar.tsx"],"sourcesContent":["import React from 'react'\n\nfunction SideBar() {\n  return (\n    <div className='flex justify-between flex-col h-screen pl-6 pr-6 border-r border-gray-200 w-auto'>\n        <div>\n            <div className='mt-6'>\n                meybe logo here\n            </div>\n            <ul className='mt-6'>\n                <li>cia bus boardai</li>\n            </ul>\n        </div>\n\n        <div className='mb-12'>\n            cia bus logout\n        </div>\n    </div>\n  )\n}\n\nexport default SideBar"],"names":[],"mappings":";;;;;;AAEA,SAAS;IACP,qBACE,8OAAC;QAAI,WAAU;;0BACX,8OAAC;;kCACG,8OAAC;wBAAI,WAAU;kCAAO;;;;;;kCAGtB,8OAAC;wBAAG,WAAU;kCACV,cAAA,8OAAC;sCAAG;;;;;;;;;;;;;;;;;0BAIZ,8OAAC;gBAAI,WAAU;0BAAQ;;;;;;;;;;;;AAK/B;uCAEe"}},
+    {"offset": {"line": 74, "column": 0}, "map": {"version":3,"sources":["file:///Users/kajusleonavicius/Desktop/ToDo-App/client/app/ToDo/page.tsx"],"sourcesContent":["import SideBar from '@/components/SideBar'\nimport React from 'react'\n\nfunction page() {\n  return (\n    <div>\n        <div>\n            <SideBar/>\n        </div>\n    </div>\n  )\n}\n\nexport default page"],"names":[],"mappings":";;;;;AAAA;;;AAGA,SAAS;IACP,qBACE,8OAAC;kBACG,cAAA,8OAAC;sBACG,cAAA,8OAAC,iIAAO;;;;;;;;;;;;;;;AAIpB;uCAEe"}}]
+}
