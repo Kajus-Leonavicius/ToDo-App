@@ -1,6 +1,7 @@
+import { NewTaskModalProps } from '@/types/types'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
-function NewTaskModal({task, show, closeModal, setTask, handleSubmit}) {
+function NewTaskModal({task, show, closeModal, setTask, handleSubmit}: NewTaskModalProps) {
 
   return (
     <>
@@ -23,7 +24,7 @@ function NewTaskModal({task, show, closeModal, setTask, handleSubmit}) {
                             <input 
                                 className='border border-gray-200 rounded-xl p-1' 
                                 type="date"
-                                onChange={(e)=>{setTask({...task, dueDate: e.target.value})}}
+                                onChange={(e)=>{setTask({...task, dueDate: new Date(e.target.value)})}}
                             />
                         </div>
                         <div className='flex flex-col mb-2'>

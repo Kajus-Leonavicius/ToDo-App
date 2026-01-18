@@ -1,4 +1,4 @@
-import { TaskPost } from "@/types/types";
+import { TaskPost, TaskUpdate } from "@/types/types";
 import axios from "axios";
 import 'dotenv/config'
 
@@ -47,14 +47,14 @@ export const deleteTodo = async (id: number) => {
     }
 }
 
-export const patchTodo = async (taskId: number, data) => {
+export const patchTodo = async (taskId: number, data:TaskUpdate) => {
     try{
         const urlWithId = process.env.NEXT_PUBLIC_TODO_API + `/${taskId}`
         const res = await axios.patch(urlWithId, {
             title: data.title,
             status: data.status,
             priority: data.priority,
-            dueDate: data.DueDate,
+            dueDate: data.dueDate,
             description: data.description,
         })
 

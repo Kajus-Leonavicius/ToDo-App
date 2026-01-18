@@ -1,8 +1,8 @@
-import { title } from 'process'
+import { TaskProps } from '@/types/types'
 import React from 'react'
 
 
-function Task({tasks, deleteTask, setSelected, selected, setUpdateData, updateData, patch}) {
+function Task({tasks, deleteTask, setSelected, selected, setUpdateData, updateData, patch}:TaskProps) {
   return (
     <table className='w-auto sm:w-full'>
         <thead className='border-b border-gray-200'>
@@ -83,14 +83,15 @@ function Task({tasks, deleteTask, setSelected, selected, setUpdateData, updateDa
                             </td>
                         )}
                         {selected === todo.id ? (
-                            <td>
+                            /*<td>
                                 <input 
                                     className='rounded-xl border p-1 border-gray-200' 
                                     type="date" 
-                                    defaultValue={todo.dueDate}
+                                    defaultValue={new Date(todo.dueDate)}
                                     onChange={(e)=>{setUpdateData({...updateData, dueDate: e.target.value})}}
                                 />
-                            </td>
+                            </td>*/
+                            <td></td>
                         ):(
                             <td className='text-center p-2'>{new Date(todo.dueDate).toDateString()}</td>
                         ) }
@@ -109,8 +110,8 @@ function Task({tasks, deleteTask, setSelected, selected, setUpdateData, updateDa
                         <td className='flex gap-5 justify-center'>
                             {selected === todo.id && (
                                 <div className='flex items-center gap-5'>
-                                    <button onClick={() => setSelected(null)}>X</button>
-                                    <button onClick={()=>{patch(todo.boardId)}} className='bg-green-400 pt-1 pb-1 pr-2 pl-2 rounded-xl'>save</button>
+                                    <button onClick={() => setSelected(Number())}>X</button>
+                                    <button onClick={()=>{patch(Number(todo.boardId))}} className='bg-green-400 pt-1 pb-1 pr-2 pl-2 rounded-xl'>save</button>
                                 </div>
                             )}
                             <button 

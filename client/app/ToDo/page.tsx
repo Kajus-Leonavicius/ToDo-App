@@ -1,11 +1,11 @@
 'use client'
 import SideBar from '@/components/SideBar'
-import ToDoList from '@/components/ToDoList'
 import ToolBar from '@/components/ToolBar'
 import TopBar from '@/components/TopBar'
 import React, { useState, useEffect } from 'react'
 import NewTaskModal from '@/components/NewTaskModal'
-import { Task } from '@/types/types'
+import Task from '@/components/Task'
+import { TaskPost, Board, TaskType, TaskUpdate } from '@/types/types'
 import { getToDo, postToDo, deleteTodo, patchTodo } from '@/services/ToDoServices'
 import { getBoards, postBoards } from '@/services/BoardsService'
 
@@ -13,17 +13,17 @@ function page() {
   //modal state
   const [showModal, setShowModal] = useState(false)
   //todo state used to map in Task.tsx
-  const [todo, setTodo] = useState<Task[]>([])
+  const [todo, setTodo] = useState<TaskType[]>([])
   //creating todo used in in NewTaskModal.tsx
-  const [task, setTask] = useState<TaskPost>({title: '', dueDate: '', description: ''})
+  const [task, setTask] = useState<TaskType>({id: Number(), title: '', dueDate: new Date(), description: '', priority: '', status: '', boardId: Number()})
   //this state used for boards in SideBar.tsx
-  const [boards, setBoards] = useState([])
+  const [boards, setBoards] = useState<Board[]>([])
   //this one used for boardId
   const [board, setBoard] = useState(null)
   // state used for editing tasks
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState(Number())
   //state for updating task
-  const [updateData, setUpdateData] = useState({
+  const [updateData, setUpdateData] = useState<TaskUpdate>({
     title: '',
     status: '',
     priority: '',
@@ -52,19 +52,19 @@ function page() {
     //add mew task
   const handleSubmit = async () =>{
           try{
-
-              await postToDo(task, localStorage.getItem('boardId'))
+              const boardId = Number(localStorage.getItem('boardId'))
+              await postToDo(task, boardId)
               setShowModal(!showModal)
-              const todo = await getToDo(localStorage.getItem('boardId'))
+              const todo = await getToDo(boardId)
               setTodo(todo)
           }catch(e){
               console.log(e)
           }
     }
   
-  const fetchBoardTasks = async(boardId) =>{
+  const fetchBoardTasks = async(boardId: number) =>{
     try{
-      localStorage.setItem('boardId', boardId)
+      localStorage.setItem('boardId', boardId.toString())
       console.log(board)
       const boardTasks = await getToDo(boardId)
       setTodo(boardTasks)
@@ -72,7 +72,7 @@ function page() {
       console.error(e)  
     }
   }
-  const deleteTask = async (id: string, boardId) =>{
+  const deleteTask = async (id: number, boardId: number) =>{
       try{
         await deleteTodo(Number(id))
         const updatedToDo = await getToDo(boardId)
@@ -82,12 +82,12 @@ function page() {
       }
   }
 
-  const updateTask = async(boardId) => {
+  const updateTask = async(boardId: number) => {
     try{
       const data = await patchTodo(Number(selected), updateData)
       const updated = await getToDo(boardId)
       setTodo(updated)
-      setSelected(null)
+      setSelected(Number())
     }catch(e){
       console.log(e)
     }
@@ -110,7 +110,6 @@ function page() {
         <div>
             <SideBar
               fetchBoardTasks={fetchBoardTasks}
-              boardTasks={fetchBoardTasks}
               addBoard={addBoard}
               boards={boards}
             />
@@ -120,15 +119,17 @@ function page() {
             <ToolBar 
               setShowModal={setShowModal}
             />
-              <ToDoList
+            <div className='border border-gray-200 m-6 h-auto w-auto rounded-2xl bg-white overflow-scroll'>
+              <Task
                 patch={updateTask}
-                updateData = {updateData}
+                updateData={updateData}
                 setUpdateData={setUpdateData}
-                setSelected={setSelected}
                 selected={selected}
+                setSelected={(setSelected)}
                 deleteTask={deleteTask}
-                todo={todo}
+                tasks={todo}
               />
+            </div>
         </div>
     </div>
   )

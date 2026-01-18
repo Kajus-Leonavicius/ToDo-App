@@ -1,6 +1,7 @@
+import { ToolBarProps } from '@/types/types'
 import React from 'react'
 
-function ToolBar({setShowModal}) {
+function ToolBar({setShowModal}: ToolBarProps) {
   return (
     <div className='lg:flex-row justify-between items-center m-6 sm:flex flex-col'>
         <div>

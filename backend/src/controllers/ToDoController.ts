@@ -5,12 +5,14 @@ import {Request, Response} from 'express'
 export const getTasks = async(req: Request, res: Response) =>{
     try{
         const {boardId} = req.params
-        const {status, priority} = req.query
+
+        const status = typeof req.query.status === 'string' ? req.query.status : undefined
+        const priority = typeof req.query.priority === 'string' ? req.query.priority : undefined
         const tasks = await prisma.tasks.findMany({
             where: {
                 boardId: Number(boardId),
                 ...(status &&{status}),
-                ...(priority &&{priority})
+                ...(priority &&{priority}) 
             }
         })
         if(tasks.length === 0){
